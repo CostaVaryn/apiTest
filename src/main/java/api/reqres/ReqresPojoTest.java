@@ -30,11 +30,8 @@ public class ReqresPojoTest {
                 //.get(URL+"api/users?page=2")
                 .then().log().all()
                 .extract().body().jsonPath().getList("data",UserData.class);
-
         users.forEach(x-> Assert.assertTrue(x.getAvatar().contains(x.getId().toString())));
-
         Assert.assertTrue(users.stream().allMatch(x->x.getEmail().endsWith("@reqres.in")));
-
         List<String> avatars = users.stream().map(UserData::getAvatar).collect(Collectors.toList());
         List<String> ids = users.stream().map(x->x.getId().toString()).collect(Collectors.toList());
         for (int i = 0; i<avatars.size(); i++){
@@ -57,7 +54,6 @@ public class ReqresPojoTest {
                 .extract().as(SuccessReg.class);
         Assert.assertNotNull(successReg.getId());
         Assert.assertNotNull(successReg.getToken());
-
         Assert.assertEquals(id, successReg.getId());
         Assert.assertEquals(token, successReg.getToken());
     }
@@ -73,7 +69,6 @@ public class ReqresPojoTest {
                 .then().log().all()
                 .extract().as(UnSuccessReg.class);
         Assert.assertEquals("Missing password",unSuccessReg.getError());
-
     }
 
     @Test
