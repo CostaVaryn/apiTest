@@ -1,6 +1,6 @@
 package api.reqres.users;
 
-public class UserTimeResponse extends UserTime{
+public class UserTimeResponse extends UserTime {
     private String updatedAt;
 
     public UserTimeResponse(String name, String job, String updatedAt) {
@@ -8,7 +8,7 @@ public class UserTimeResponse extends UserTime{
         this.updatedAt = updatedAt;
     }
     
-    public String getUpdatedAt(){
+    public String getUpdatedAt() {
         return updatedAt;
     }
 }
