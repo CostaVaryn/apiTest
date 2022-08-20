@@ -35,7 +35,6 @@ public class ReqresNoPojoTest {
         List<String> emails = jsonPath.get("data.email");
         List<Integer> ids = jsonPath.get("data.id");
         List<String> avatars = jsonPath.get("data.avatar");
-
         for(int i = 0; i< avatars.size(); i++){
             Assert.assertTrue(avatars.get(i).contains(ids.get(i).toString()));
         }
