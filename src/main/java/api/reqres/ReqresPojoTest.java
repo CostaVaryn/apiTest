@@ -21,7 +21,7 @@ public class ReqresPojoTest {
     private final static String URL = "https://reqres.in/";
 
     @Test
-    public void checkAvatarAndIdTest(){
+    public void checkAvatarAndIdTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<UserData> users = given()
                 .when()
@@ -41,7 +41,7 @@ public class ReqresPojoTest {
 
     @Test
     // тест успешной регистрации
-    public void successRegTest(){
+    public void successRegTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Integer id = 4;
         String token = "QpwL5tke4Pnpja7X4";
@@ -60,7 +60,7 @@ public class ReqresPojoTest {
 
     @Test
     // тест неудачной регистрации
-    public void unSuccessRegTest(){
+    public void unSuccessRegTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
         Register user = new Register("sydney@fife","");
         UnSuccessReg unSuccessReg = given()
@@ -72,7 +72,7 @@ public class ReqresPojoTest {
     }
 
     @Test
-    public void sortedYearsTest(){
+    public void sortedYearsTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<ColorsData> colors = given()
                 .when()
@@ -87,7 +87,7 @@ public class ReqresPojoTest {
     }
 
     @Test
-    public void deleteUserTest(){
+    public void deleteUserTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(204));
         given()
                 .when()
@@ -96,7 +96,7 @@ public class ReqresPojoTest {
     }
 
     @Test
-    public void timeTest(){
+    public void timeTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         UserTime user = new UserTime("morpheus", "zion resident");
         UserTimeResponse response = given()
