@@ -18,7 +18,7 @@ public class ReqresNoPojoTest {
     private final static String URL = "https://reqres.in/";
 
     @Test
-    public void checkAvatarsNoPojoTest(){
+    public void checkAvatarsNoPojoTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Response response = given()
                 .when()
@@ -35,7 +35,7 @@ public class ReqresNoPojoTest {
         List<String> emails = jsonPath.get("data.email");
         List<Integer> ids = jsonPath.get("data.id");
         List<String> avatars = jsonPath.get("data.avatar");
-        for(int i = 0; i< avatars.size(); i++){
+        for(int i = 0; i< avatars.size(); i++) {
             Assert.assertTrue(avatars.get(i).contains(ids.get(i).toString()));
         }
 
@@ -44,7 +44,7 @@ public class ReqresNoPojoTest {
     }
 
     @Test
-    public void successUserRegTestNoPojo(){
+    public void successUserRegTestNoPojo() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Map<String, String> user = new HashMap<>();
         user.put("email", "eve.holt@reqres.in");
@@ -66,7 +66,7 @@ public class ReqresNoPojoTest {
 
     @Test
     // Unsuccessful registration
-    public void unsuccessUserRegNoPojo(){
+    public void unsuccessUserRegNoPojo() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
         Map<String, String> user = new HashMap<>();
         user.put("email","sydney@fife");
