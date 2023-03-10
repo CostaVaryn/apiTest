@@ -1,4 +1,4 @@
-package api.reqres;
+package tests;
 
 import api.reqres.colors.ColorsData;
 import api.reqres.registration.Register;

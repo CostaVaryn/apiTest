@@ -1,4 +1,4 @@
-package api.reqres;
+package tests;
 
 import api.spec.Specifications;
 import io.restassured.path.json.JsonPath;
