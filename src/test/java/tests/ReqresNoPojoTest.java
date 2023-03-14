@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -77,6 +78,83 @@ public class ReqresNoPojoTest {
                 () -> assertEquals("Janet", firstName),
                 () -> assertEquals("Weaver", lastName)
         );
+    }
+
+    @Test
+    @DisplayName("Check single user not found")
+    public void checkSingleUserNotFoundTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(404));
+        Response response = given()
+                .when()
+                .get("api/users/23")
+                .then().log().all()
+                .statusCode(404)
+                .extract().response();
+        assertEquals(404, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Check list resources")
+    public void checkListResourcesTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        Response response = given()
+                .when()
+                .get("api/unknown")
+                .then().log().all()
+                .body("page", equalTo(1))
+                .body("per_page", equalTo(6))
+                .body("total", equalTo(12))
+                .body("total_pages", equalTo(2))
+                .body("data.id", notNullValue())
+                .body("data.name", notNullValue())
+                .body("data.year", notNullValue())
+                .body("data.color", notNullValue())
+                .body("data.pantone_value", notNullValue())
+                .extract().response();
+        JsonPath jsonPath = response.jsonPath();
+        List<Objects> objects = jsonPath.get("data");
+        assertAll(
+                () -> assertNotNull(objects),
+                () -> assertEquals(6, objects.size())
+        );
+    }
+
+    @Test
+    @DisplayName("Check single resource")
+    public void checkSingleResourceTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        Response response = given()
+                .when()
+                .get("api/unknown/2")
+                .then().log().all()
+                .body("data.id", notNullValue())
+                .body("data.name", notNullValue())
+                .body("data.year", notNullValue())
+                .body("data.color", notNullValue())
+                .body("data.pantone_value", notNullValue())
+                .extract().response();
+        JsonPath jsonPath = response.jsonPath();
+        int id = jsonPath.getInt("data.id");
+        String name = jsonPath.getString("data.name");
+        int year = jsonPath.getInt("data.year");
+        assertAll(
+                () -> assertEquals(2, id),
+                () -> assertEquals("fuchsia rose", name),
+                () -> assertEquals(2001, year)
+        );
+    }
+
+    @Test
+    @DisplayName("Check single resource not found")
+    public void checkSingleResourceNotFoundTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(404));
+        Response response = given()
+                .when()
+                .get("api/unknown/23")
+                .then().log().all()
+                .statusCode(404)
+                .extract().response();
+        assertEquals(404, response.getStatusCode());
     }
 
     @Test
