@@ -22,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReqresNoPojoTest {
     private final static String URL = "https://reqres.in/";
+    private final static String TOKEN = "QpwL5tke4Pnpja7X4";
 
     @Test
     @DisplayName("Check avatars")
@@ -170,14 +171,14 @@ public class ReqresNoPojoTest {
                 .post("api/register")
                 .then().log().all()
                 .body("id", equalTo(4))
-                .body("token", equalTo("QpwL5tke4Pnpja7X4"))
+                .body("token", equalTo(TOKEN))
                 .extract().response();
         JsonPath jsonPath = response.jsonPath();
         int id = jsonPath.get("id");
         String token = jsonPath.get("token");
         assertAll(
                 () -> Assert.assertEquals(4, id),
-                () -> Assert.assertEquals("QpwL5tke4Pnpja7X4", token)
+                () -> Assert.assertEquals(TOKEN, token)
         );
     }
 
