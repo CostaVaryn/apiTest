@@ -21,7 +21,6 @@ public class TestData {
         jobTest = "leader";
         jobUpdateTest = "zion resident";
         domainEmail = "@reqres.in";
-
     }
 
     public List getUsersList() {

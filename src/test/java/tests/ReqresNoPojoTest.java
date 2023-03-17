@@ -365,7 +365,7 @@ public class ReqresNoPojoTest {
 
     @Test
     @DisplayName("DELETE: Delete user")
-    public void deleteUserNoPojoTest() {
+    public void checkDeleteUserNoPojoTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(204));
         Response response = given()
                 .when()
