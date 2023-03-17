@@ -7,6 +7,9 @@ public class UnSuccessReg {
         this.error = error;
     }
 
+    public UnSuccessReg() {
+    }
+
     public String getError() {
         return error;
     }

@@ -9,6 +9,9 @@ public class SuccessReg {
         this.token = token;
     }
 
+    public SuccessReg() {
+    }
+
     public Integer getId() {
         return id;
     }
