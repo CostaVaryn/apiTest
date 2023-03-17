@@ -8,4 +8,10 @@ public class Register {
         this.email = email;
         this.password = password;
     }
+
+    public String toString() {
+        return password.equals("") ? "{\n    " + "\"email\": " + "\"" + email +"\"" + "\n" + "}" :
+                "{\n    " + "\"email\": " + "\"" + email +"\"," + "\n" +
+                "    " + "\"password\": " + "\"" + password + "\"\n" + "}";
+    }
 }
