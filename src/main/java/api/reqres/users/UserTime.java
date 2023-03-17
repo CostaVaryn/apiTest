@@ -9,6 +9,9 @@ public class UserTime {
         this.job = job;
     }
 
+    public UserTime() {
+    }
+
     public String getName() {
         return name;
     }

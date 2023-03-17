@@ -7,6 +7,8 @@ public class UserTimeResponse extends UserTime {
         super(name, job);
         this.updatedAt = updatedAt;
     }
+    public UserTimeResponse() {
+    }
     
     public String getUpdatedAt() {
         return updatedAt;

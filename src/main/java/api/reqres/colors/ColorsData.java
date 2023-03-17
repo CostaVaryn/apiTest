@@ -15,6 +15,9 @@ public class ColorsData {
         this.pantone_value = pantone_value;
     }
 
+    public ColorsData() {
+    }
+
     public Integer getId() {
         return id;
     }
