@@ -1,6 +1,7 @@
 package tests;
 
 import api.reqres.colors.ColorsData;
+import api.reqres.info.TestData;
 import api.reqres.registration.Register;
 import api.reqres.registration.SuccessReg;
 import api.reqres.registration.UnSuccessReg;
@@ -8,6 +9,7 @@ import api.reqres.users.UserData;
 import api.reqres.users.UserTime;
 import api.reqres.users.UserTimeResponse;
 import api.spec.Specifications;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,29 +19,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class ReqresPojoTest {
-    private final static String URL = "https://reqres.in/";
+    private static final TestData testData = new TestData();
+    private final static String URL = testData.getUrl();
 
     @Test
     public void checkAvatarAndIdTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<UserData> users = given()
+                .contentType(ContentType.JSON)
                 .when()
                 .get("api/users?page=2")
-//                .contentType(ContentType.JSON)
-//                .get(URL + "api/users?page=2")
                 .then().log().all()
                 .extract().body().jsonPath().getList("data", UserData.class);
-        users.forEach(x -> Assert.assertTrue(x.getAvatar().contains(x.getId().toString())));
-        Assert.assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith("@reqres.in")));
+        users.forEach(x -> assertTrue(x.getAvatar().contains(x.getId().toString())));
         List<String> avatars = users.stream().map(UserData::getAvatar).collect(Collectors.toList());
         List<String> ids = users.stream().map(x -> x.getId().toString()).collect(Collectors.toList());
+        assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith("@reqres.in")));
         for (int i = 0; i < avatars.size(); i++) {
-            Assert.assertTrue(avatars.get(i).contains(ids.get(i)));
+            assertTrue(avatars.get(i).contains(ids.get(i)));
         }
     }
 
