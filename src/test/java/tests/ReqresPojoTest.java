@@ -11,7 +11,6 @@ import api.reqres.users.UserTimeResponse;
 import api.spec.Specifications;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.Clock;
