@@ -37,7 +37,7 @@ public class ReqresPojoTest {
         users.forEach(x -> assertTrue(x.getAvatar().contains(x.getId().toString())));
         List<String> avatars = users.stream().map(UserData::getAvatar).collect(Collectors.toList());
         List<String> ids = users.stream().map(x -> x.getId().toString()).collect(Collectors.toList());
-        assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith("@reqres.in")));
+        assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith(testData.getDomainEmail())));
         for (int i = 0; i < avatars.size(); i++) {
             assertTrue(avatars.get(i).contains(ids.get(i)));
         }
@@ -47,8 +47,8 @@ public class ReqresPojoTest {
     public void successRegTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Integer id = 4;
-        String token = "QpwL5tke4Pnpja7X4";
-        Register user = new Register("eve.holt@reqres.in", "pistol");
+        String token = testData.getToken();
+        Register user = new Register(testData.getValidEmail(), testData.getRegPass());
         SuccessReg successReg = given()
                 .body(user.toString())
                 .when()
@@ -66,13 +66,13 @@ public class ReqresPojoTest {
     @Test
     public void unSuccessRegTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
-        Register user = new Register("sydney@fife", "");
+        Register user = new Register(testData.getInvalidRegEmail(), "");
         UnSuccessReg unSuccessReg = given()
                 .body(user.toString())
                 .post("api/register")
                 .then().log().all()
                 .extract().as(UnSuccessReg.class);
-        assertEquals("Missing password", unSuccessReg.getError());
+        assertEquals(testData.getErrorMessage(), unSuccessReg.getError());
     }
 
     @Test
