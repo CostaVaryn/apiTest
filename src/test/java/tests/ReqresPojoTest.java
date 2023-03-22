@@ -101,7 +101,7 @@ public class ReqresPojoTest {
     @Test
     public void checkTimeUpdatedTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
-        UserTime user = new UserTime("morpheus", "zion resident");
+        UserTime user = new UserTime(testData.getNameTest(), testData.getJobUpdateTest());
         UserTimeResponse response = given()
                 .body(user)
                 .when()
