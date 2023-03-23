@@ -50,6 +50,7 @@ public class ReqresPojoTest {
         String token = testData.getToken();
         Register user = new Register(testData.getValidEmail(), testData.getRegPass());
         SuccessReg successReg = given()
+                .contentType(ContentType.JSON)
                 .body(user.toString())
                 .when()
                 .post("api/register")
@@ -68,6 +69,7 @@ public class ReqresPojoTest {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
         Register user = new Register(testData.getInvalidRegEmail(), "");
         UnSuccessReg unSuccessReg = given()
+                .contentType(ContentType.JSON)
                 .body(user.toString())
                 .post("api/register")
                 .then().log().all()
@@ -79,6 +81,7 @@ public class ReqresPojoTest {
     public void sortedYearsTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<ColorsData> colors = given()
+                .contentType(ContentType.JSON)
                 .when()
                 .get("api/unknown")
                 .then().log().all()
@@ -92,6 +95,7 @@ public class ReqresPojoTest {
     public void checkDeleteUserTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(204));
         Response response = given()
+                .contentType(ContentType.JSON)
                 .when()
                 .delete("api/users/2")
                 .then().log().all().extract().response();
@@ -103,6 +107,7 @@ public class ReqresPojoTest {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         UserTime user = new UserTime(testData.getNameTest(), testData.getJobUpdateTest());
         UserTimeResponse response = given()
+                .contentType(ContentType.JSON)
                 .body(user)
                 .when()
                 .put("api/users/2")
