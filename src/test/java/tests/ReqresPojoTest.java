@@ -1,5 +1,8 @@
 package tests;
 
+import api.reqres.auth.Login;
+import api.reqres.auth.SuccessLog;
+import api.reqres.auth.UnSuccessLog;
 import api.reqres.colors.ColorsData;
 import api.reqres.info.TestData;
 import api.reqres.registration.Register;
@@ -75,6 +78,37 @@ public class ReqresPojoTest {
                 .then().log().all()
                 .extract().as(UnSuccessReg.class);
         assertEquals(testData.getErrorMessage(), unSuccessReg.getError());
+    }
+
+    @Test
+    public void successLogTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
+        Login user = new Login(testData.getInvalidLogEmail(), "");
+        UnSuccessLog unSuccessLog = given()
+                .contentType(ContentType.JSON)
+                .body(user.toString())
+                .when()
+                .post("api/login")
+                .then().log().all()
+                .extract().as(UnSuccessLog.class);
+        assertEquals(testData.getErrorMessage(), unSuccessLog.getError());
+    }
+
+    @Test
+    public void unSuccessLogTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        Login user = new Login(testData.getValidEmail(), testData.getLogPass());
+        SuccessLog successLog = given()
+                .contentType(ContentType.JSON)
+                .body(user.toString())
+                .when()
+                .post("api/login")
+                .then().log().all()
+                .extract().as(SuccessLog.class);
+        assertAll(
+                () -> assertNotNull(successLog.getToken()),
+                () -> assertEquals(testData.getToken(), successLog.getToken())
+        );
     }
 
     @Test
