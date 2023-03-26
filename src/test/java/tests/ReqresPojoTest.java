@@ -112,6 +112,27 @@ public class ReqresPojoTest {
     }
 
     @Test
+    public void checkCreateTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(201));
+        UserTime user = new UserTime(testData.getNameTest(), testData.getJobTest());
+        UserTimeResponse response = given()
+                .contentType(ContentType.JSON)
+                .body(user)
+                .when()
+                .post("api/users")
+                .then().log().all()
+                .extract().as(UserTimeResponse.class);
+        String regex = "(.{6})$";
+        String currentTime = Clock.systemUTC().instant().toString().replaceAll(regex, "");
+        assertAll(
+                () -> assertEquals(testData.getNameTest(), response.getName()),
+                () -> assertEquals(testData.getJobTest(), response.getJob()),
+                () -> assertNotNull(response.getId()),
+                () -> assertEquals(currentTime, response.getCreatedAt().replaceAll(regex, ""))
+        );
+    }
+
+    @Test
     public void sortedYearsTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<ColorsData> colors = given()
@@ -137,7 +158,7 @@ public class ReqresPojoTest {
     }
 
     @Test
-    public void checkTimeUpdatedTest() {
+    public void checkTimeUpdatedUsingPutMethodTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         UserTime user = new UserTime(testData.getNameTest(), testData.getJobUpdateTest());
         UserTimeResponse response = given()
@@ -145,6 +166,22 @@ public class ReqresPojoTest {
                 .body(user)
                 .when()
                 .put("api/users/2")
+                .then().log().all()
+                .extract().as(UserTimeResponse.class);
+        String regex = "(.{6})$";
+        String currentTime = Clock.systemUTC().instant().toString().replaceAll(regex, "");
+        assertEquals(currentTime, response.getUpdatedAt().replaceAll(regex, ""));
+    }
+
+    @Test
+    public void checkTimeUpdatedUsingPatchMethodTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        UserTime user = new UserTime(testData.getNameTest(), testData.getJobUpdateTest());
+        UserTimeResponse response = given()
+                .contentType(ContentType.JSON)
+                .body(user)
+                .when()
+                .patch("api/users/2")
                 .then().log().all()
                 .extract().as(UserTimeResponse.class);
         String regex = "(.{6})$";
