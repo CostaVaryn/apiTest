@@ -3,7 +3,7 @@ package api.reqres.auth;
 public class SuccessLog {
     private String token;
 
-    public SuccessLog (String token) {
+    public SuccessLog(String token) {
         this.token = token;
     }
 
