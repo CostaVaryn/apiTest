@@ -20,11 +20,13 @@ public class Specifications {
                 .expectStatusCode(200)
                 .build();
     }
+
     public static ResponseSpecification responseSpecError400() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(400)
                 .build();
     }
+
     public static ResponseSpecification responseSpecUnique(int status) {
         return new ResponseSpecBuilder()
                 .expectStatusCode(status)
