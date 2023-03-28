@@ -15,6 +15,7 @@ public class UserTimeResponse extends UserTime {
         this.id = id;
         this.createdAt = createdAt;
     }
+
     public UserTimeResponse() {
     }
 
@@ -25,6 +26,7 @@ public class UserTimeResponse extends UserTime {
     public String getUpdatedAt() {
         return updatedAt;
     }
+
     public String getCreatedAt() {
         return createdAt;
     }
