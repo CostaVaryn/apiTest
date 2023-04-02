@@ -81,7 +81,7 @@ public class ReqresPojoTest {
     }
 
     @Test
-    public void successLogTest() {
+    public void unSuccessLogTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
         Login user = new Login(testData.getInvalidLogEmail(), "");
         UnSuccessLog unSuccessLog = given()
@@ -95,7 +95,7 @@ public class ReqresPojoTest {
     }
 
     @Test
-    public void unSuccessLogTest() {
+    public void successLogTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Login user = new Login(testData.getValidEmail(), testData.getLogPass());
         SuccessLog successLog = given()
