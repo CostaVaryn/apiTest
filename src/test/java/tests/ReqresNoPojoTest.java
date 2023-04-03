@@ -236,7 +236,10 @@ public class ReqresNoPojoTest {
                 .extract().response();
         JsonPath jsonPath = response.jsonPath();
         String token = jsonPath.get("token");
-        assertEquals(testData.getToken(), token);
+        assertAll(
+                () -> assertNotNull(token),
+                () -> assertEquals(testData.getToken(), token)
+        );
     }
 
     @Test
