@@ -1,7 +1,7 @@
 package tests;
 
 import api.reqres.info.PersonData;
-import api.reqres.info.ResourceData;
+import api.reqres.info.ResourceInfo;
 import api.reqres.info.TestData;
 import api.spec.Specifications;
 import io.restassured.path.json.JsonPath;
@@ -27,7 +27,7 @@ public class ReqresNoPojoTest {
     private static final TestData testData = new TestData();
     private final static String URL = testData.getUrl();
     List<PersonData> usersList = new ArrayList<>(testData.getUsersList());
-    List<ResourceData> resList = new ArrayList<>(testData.getResList());
+    List<ResourceInfo> resList = new ArrayList<>(testData.getResList());
 
     @ParameterizedTest
     @DisplayName("GET: Check list users")
@@ -217,8 +217,8 @@ public class ReqresNoPojoTest {
         int id = jsonPath.get("id");
         String token = jsonPath.get("token");
         assertAll(
-                () -> Assert.assertEquals(4, id),
-                () -> Assert.assertEquals(testData.getToken(), token)
+                () -> assertEquals(4, id),
+                () -> assertEquals(testData.getToken(), token)
         );
     }
 
