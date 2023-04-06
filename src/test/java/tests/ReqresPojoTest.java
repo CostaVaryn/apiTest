@@ -25,6 +25,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReqresPojoTest {
     private static final TestData testData = new TestData();
@@ -157,6 +158,19 @@ public class ReqresPojoTest {
         List<Integer> years = colors.stream().map(ColorsData::getYear).collect(Collectors.toList());
         List<Integer> sortedYears = years.stream().sorted().collect(Collectors.toList());
         assertEquals(sortedYears, years);
+    }
+
+    @Test
+    @DisplayName("GET: SINGLE <RESOURCE> NOT FOUND")
+    public void checkNotFoundTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(404));
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("api/unknown/23")
+                .then().log().all()
+                .extract().response();
+        assertEquals(404, response.getStatusCode());
     }
 
     @Test
