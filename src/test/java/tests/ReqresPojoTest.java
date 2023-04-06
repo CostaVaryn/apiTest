@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -39,13 +40,17 @@ public class ReqresPojoTest {
                 .get("api/users?page=2")
                 .then().log().all()
                 .extract().body().jsonPath().getList("data", UserData.class);
-        users.forEach(x -> assertTrue(x.getAvatar().contains(x.getId().toString())));
         List<String> avatars = users.stream().map(UserData::getAvatar).collect(Collectors.toList());
         List<String> ids = users.stream().map(x -> x.getId().toString()).collect(Collectors.toList());
-        assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith(testData.getDomainEmail())));
-        for (int i = 0; i < avatars.size(); i++) {
-            assertTrue(avatars.get(i).contains(ids.get(i)));
-        }
+        assertAll(
+                () -> users.forEach(x -> assertTrue(x.getAvatar().contains(x.getId().toString()))),
+                () -> {
+                    for (int i = 0; i < avatars.size(); i++) {
+                        assertTrue(avatars.get(i).contains(ids.get(i)));
+                    }
+                },
+                () -> assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith(testData.getDomainEmail())))
+        );
     }
 
     @Test
@@ -198,5 +203,29 @@ public class ReqresPojoTest {
         String regex = "(.{6})$";
         String currentTime = Clock.systemUTC().instant().toString().replaceAll(regex, "");
         assertEquals(currentTime, response.getUpdatedAt().replaceAll(regex, ""));
+    }
+
+    @Test
+    @DisplayName("GET: DELAYED RESPONSE")
+    public void checkListUsersWithDelayTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        List<UserData> users = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("api/users?page=2")
+                .then().log().all()
+                .body("per_page", equalTo(6))
+                .extract().body().jsonPath().getList("data", UserData.class);
+        List<String> avatars = users.stream().map(UserData::getAvatar).collect(Collectors.toList());
+        List<String> ids = users.stream().map(x -> x.getId().toString()).collect(Collectors.toList());
+        assertAll(
+                () -> users.forEach(x -> assertTrue(x.getAvatar().contains(x.getId().toString()))),
+                () -> {
+                    for (int i = 0; i < avatars.size(); i++) {
+                        assertTrue(avatars.get(i).contains(ids.get(i)));
+                    }
+                },
+                () -> assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith(testData.getDomainEmail())))
+        );
     }
 }
