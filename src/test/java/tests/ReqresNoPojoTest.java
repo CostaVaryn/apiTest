@@ -53,11 +53,13 @@ public class ReqresNoPojoTest {
                 () -> assertNotNull(emails),
                 () -> assertNotNull(ids),
                 () -> assertNotNull(avatars),
-                () -> assertTrue(emails.stream().allMatch(x -> x.endsWith(testData.getDomainEmail())))
+                () -> assertTrue(emails.stream().allMatch(x -> x.endsWith(testData.getDomainEmail()))),
+                () -> {
+                    for (int i = 0; i < avatars.size(); i++) {
+                        assertTrue(avatars.get(i).contains(ids.get(i).toString()));
+                    }
+                }
         );
-        for (int i = 0; i < avatars.size(); i++) {
-            assertTrue(avatars.get(i).contains(ids.get(i).toString()));
-        }
     }
 
     @ParameterizedTest
@@ -256,7 +258,7 @@ public class ReqresNoPojoTest {
                 .extract().response();
         JsonPath jsonPath = response.jsonPath();
         String error = jsonPath.get("error");
-        Assert.assertEquals(testData.getErrorMessage(), error);
+        assertEquals(testData.getErrorMessage(), error);
     }
 
     @Test
@@ -273,7 +275,7 @@ public class ReqresNoPojoTest {
                 .extract().response();
         JsonPath jsonPath = response.jsonPath();
         String error = jsonPath.get("error");
-        Assert.assertEquals(testData.getErrorMessage(), error);
+        assertEquals(testData.getErrorMessage(), error);
     }
 
     @Test
