@@ -15,6 +15,7 @@ import api.spec.Specifications;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.time.Clock;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ReqresPojoTest {
     private final static String URL = testData.getUrl();
 
     @Test
+    @DisplayName("GET: LIST USERS")
     public void checkAvatarAndIdTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<UserData> users = given()
@@ -47,6 +49,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("POST: REGISTER - SUCCESSFUL")
     public void successRegTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Integer id = 4;
@@ -68,6 +71,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("POST: REGISTER - UNSUCCESSFUL")
     public void unSuccessRegTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
         Register user = new Register(testData.getInvalidRegEmail(), "");
@@ -81,6 +85,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("POST: LOGIN - UNSUCCESSFUL")
     public void unSuccessLogTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecError400());
         Login user = new Login(testData.getInvalidLogEmail(), "");
@@ -95,6 +100,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("POST: LOGIN - SUCCESSFUL")
     public void successLogTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         Login user = new Login(testData.getValidEmail(), testData.getLogPass());
@@ -112,6 +118,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("POST: CREATE")
     public void checkCreateTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(201));
         UserTime user = new UserTime(testData.getNameTest(), testData.getJobTest());
@@ -133,6 +140,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("GET: LIST <RESOURCE>")
     public void sortedYearsTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<ColorsData> colors = given()
@@ -147,6 +155,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("DELETE: DELETE")
     public void checkDeleteUserTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(204));
         Response response = given()
@@ -158,6 +167,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("PUT: UPDATE")
     public void checkTimeUpdatedUsingPutMethodTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         UserTime user = new UserTime(testData.getNameTest(), testData.getJobUpdateTest());
@@ -174,6 +184,7 @@ public class ReqresPojoTest {
     }
 
     @Test
+    @DisplayName("PATCH: UPDATE")
     public void checkTimeUpdatedUsingPatchMethodTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         UserTime user = new UserTime(testData.getNameTest(), testData.getJobUpdateTest());
