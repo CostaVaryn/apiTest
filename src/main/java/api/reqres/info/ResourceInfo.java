@@ -1,10 +1,10 @@
 package api.reqres.info;
 
-public class ResourceData {
+public class ResourceInfo {
     String name;
     int year;
 
-    public ResourceData(String name, int year) {
+    public ResourceInfo(String name, int year) {
         this.name = name;
         this.year = year;
     }
