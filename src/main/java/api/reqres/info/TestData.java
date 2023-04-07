@@ -24,36 +24,36 @@ public class TestData {
     }
 
     public List getUsersList() {
-        List<PersonData> usersList = new ArrayList<>();
-        usersList.add(new PersonData("george.bluth@reqres.in", "George", "Bluth"));
-        usersList.add(new PersonData("janet.weaver@reqres.in", "Janet", "Weaver"));
-        usersList.add(new PersonData("emma.wong@reqres.in", "Emma", "Wong"));
-        usersList.add(new PersonData("eve.holt@reqres.in", "Eve", "Holt"));
-        usersList.add(new PersonData("charles.morris@reqres.in", "Charles", "Morris"));
-        usersList.add(new PersonData("tracey.ramos@reqres.in", "Tracey", "Ramos"));
-        usersList.add(new PersonData("michael.lawson@reqres.in", "Michael", "Lawson"));
-        usersList.add(new PersonData("lindsay.ferguson@reqres.in", "Lindsay", "Ferguson"));
-        usersList.add(new PersonData("tobias.funke@reqres.in", "Tobias", "Funke"));
-        usersList.add(new PersonData("byron.fields@reqres.in", "Byron", "Fields"));
-        usersList.add(new PersonData("george.edwards@reqres.in", "George", "Edwards"));
-        usersList.add(new PersonData("rachel.howell@reqres.in", "Rachel", "Howell"));
+        List<PersonInfo> usersList = new ArrayList<>();
+        usersList.add(new PersonInfo("george.bluth@reqres.in", "George", "Bluth"));
+        usersList.add(new PersonInfo("janet.weaver@reqres.in", "Janet", "Weaver"));
+        usersList.add(new PersonInfo("emma.wong@reqres.in", "Emma", "Wong"));
+        usersList.add(new PersonInfo("eve.holt@reqres.in", "Eve", "Holt"));
+        usersList.add(new PersonInfo("charles.morris@reqres.in", "Charles", "Morris"));
+        usersList.add(new PersonInfo("tracey.ramos@reqres.in", "Tracey", "Ramos"));
+        usersList.add(new PersonInfo("michael.lawson@reqres.in", "Michael", "Lawson"));
+        usersList.add(new PersonInfo("lindsay.ferguson@reqres.in", "Lindsay", "Ferguson"));
+        usersList.add(new PersonInfo("tobias.funke@reqres.in", "Tobias", "Funke"));
+        usersList.add(new PersonInfo("byron.fields@reqres.in", "Byron", "Fields"));
+        usersList.add(new PersonInfo("george.edwards@reqres.in", "George", "Edwards"));
+        usersList.add(new PersonInfo("rachel.howell@reqres.in", "Rachel", "Howell"));
         return usersList;
     }
 
     public List getResList() {
-        List<ResourceData> resList = new ArrayList<>();
-        resList.add(new ResourceData("cerulean", 2000));
-        resList.add(new ResourceData("fuchsia rose", 2001));
-        resList.add(new ResourceData("true red", 2002));
-        resList.add(new ResourceData("aqua sky", 2003));
-        resList.add(new ResourceData("tigerlily", 2004));
-        resList.add(new ResourceData("blue turquoise", 2005));
-        resList.add(new ResourceData("sand dollar", 2006));
-        resList.add(new ResourceData("chili pepper", 2007));
-        resList.add(new ResourceData("blue iris", 2008));
-        resList.add(new ResourceData("mimosa", 2009));
-        resList.add(new ResourceData("turquoise", 2010));
-        resList.add(new ResourceData("honeysuckle", 2011));
+        List<ResourceInfo> resList = new ArrayList<>();
+        resList.add(new ResourceInfo("cerulean", 2000));
+        resList.add(new ResourceInfo("fuchsia rose", 2001));
+        resList.add(new ResourceInfo("true red", 2002));
+        resList.add(new ResourceInfo("aqua sky", 2003));
+        resList.add(new ResourceInfo("tigerlily", 2004));
+        resList.add(new ResourceInfo("blue turquoise", 2005));
+        resList.add(new ResourceInfo("sand dollar", 2006));
+        resList.add(new ResourceInfo("chili pepper", 2007));
+        resList.add(new ResourceInfo("blue iris", 2008));
+        resList.add(new ResourceInfo("mimosa", 2009));
+        resList.add(new ResourceInfo("turquoise", 2010));
+        resList.add(new ResourceInfo("honeysuckle", 2011));
         return resList;
     }
 
