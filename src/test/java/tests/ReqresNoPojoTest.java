@@ -256,8 +256,8 @@ public class ReqresNoPojoTest {
                 .then().log().all()
                 .extract().response();
         JsonPath jsonPath = response.jsonPath();
-        String error = jsonPath.get("error");
-        assertEquals(testData.getErrorMessage(), error);
+        String errorMessage = jsonPath.get("error");
+        assertEquals(testData.getErrorMessage(), errorMessage);
     }
 
     @Test
@@ -273,8 +273,8 @@ public class ReqresNoPojoTest {
                 .then().log().all()
                 .extract().response();
         JsonPath jsonPath = response.jsonPath();
-        String error = jsonPath.get("error");
-        assertEquals(testData.getErrorMessage(), error);
+        String errorMessage = jsonPath.get("error");
+        assertEquals(testData.getErrorMessage(), errorMessage);
     }
 
     @Test
