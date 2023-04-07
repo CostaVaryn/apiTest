@@ -1,12 +1,11 @@
 package tests;
 
-import api.reqres.info.PersonData;
+import api.reqres.info.PersonInfo;
 import api.reqres.info.ResourceInfo;
 import api.reqres.info.TestData;
 import api.spec.Specifications;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class ReqresNoPojoTest {
     private static final TestData testData = new TestData();
     private final static String URL = testData.getUrl();
-    List<PersonData> usersList = new ArrayList<>(testData.getUsersList());
+    List<PersonInfo> usersList = new ArrayList<>(testData.getUsersList());
     List<ResourceInfo> resList = new ArrayList<>(testData.getResList());
 
     @ParameterizedTest
