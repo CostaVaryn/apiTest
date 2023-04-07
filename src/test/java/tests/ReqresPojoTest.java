@@ -8,6 +8,7 @@ import api.reqres.info.TestData;
 import api.reqres.registration.Register;
 import api.reqres.registration.SuccessReg;
 import api.reqres.registration.UnSuccessReg;
+import api.reqres.resource.ResourceData;
 import api.reqres.users.UserData;
 import api.reqres.users.UserTime;
 import api.reqres.users.UserTimeResponse;
@@ -16,6 +17,8 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.time.Clock;
 import java.util.List;
@@ -31,14 +34,15 @@ public class ReqresPojoTest {
     private static final TestData testData = new TestData();
     private final static String URL = testData.getUrl();
 
-    @Test
+    @ParameterizedTest
     @DisplayName("GET: LIST USERS")
-    public void checkAvatarAndIdTest() {
+    @ValueSource(ints = {1, 2})
+    public void checkAvatarAndIdTest(Integer page) {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         List<UserData> users = given()
                 .contentType(ContentType.JSON)
                 .when()
-                .get("api/users?page=2")
+                .get("api/users?page=" + page)
                 .then().log().all()
                 .extract().body().jsonPath().getList("data", UserData.class);
         List<String> avatars = users.stream().map(UserData::getAvatar).collect(Collectors.toList());
@@ -51,6 +55,25 @@ public class ReqresPojoTest {
                     }
                 },
                 () -> assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith(testData.getDomainEmail())))
+        );
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+    @DisplayName("GET: SINGLE <RESOURCE>")
+    public void checkSingleUserTest(Integer userId) {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        UserData userData = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("api/users/" + userId)
+                .then().log().all()
+                .extract().body().jsonPath().getObject("data", UserData.class);
+        assertAll(
+                () -> assertNotNull(userData),
+                () -> assertEquals(userId, userData.getId()),
+                () -> assertTrue(userData.getEmail().endsWith(testData.getDomainEmail())),
+                () -> assertTrue(userData.getAvatar().endsWith(userId + "-image.jpg"))
         );
     }
 
@@ -160,14 +183,44 @@ public class ReqresPojoTest {
         assertEquals(sortedYears, years);
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+    @DisplayName("GET: SINGLE <RESOURCE>")
+    public void checkSingleResourceTest(Integer resId) {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
+        ResourceData resData = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("api/unknown/" + resId)
+                .then().log().all()
+                .extract().body().jsonPath().getObject("data", ResourceData.class);
+        assertAll(
+                () -> assertNotNull(resData),
+                () -> assertEquals(resId, resData.getId())
+        );
+    }
+
     @Test
     @DisplayName("GET: SINGLE <RESOURCE> NOT FOUND")
-    public void checkNotFoundTest() {
+    public void checkSingleResourceNotFoundTest() {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(404));
         Response response = given()
                 .contentType(ContentType.JSON)
                 .when()
                 .get("api/unknown/23")
+                .then().log().all()
+                .extract().response();
+        assertEquals(404, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("GET: SINGLE USER NOT FOUND")
+    public void checkSingleUserNotFoundTest() {
+        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecUnique(404));
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("/api/users/23")
                 .then().log().all()
                 .extract().response();
         assertEquals(404, response.getStatusCode());
