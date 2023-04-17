@@ -34,7 +34,7 @@ public class ReqresPojoTest {
     private static final TestData testData = new TestData();
     private final static String URL = testData.getUrl();
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} - Check {0} list users")
     @DisplayName("GET: LIST USERS")
     @ValueSource(ints = {1, 2})
     public void checkAvatarAndIdTest(Integer page) {
@@ -58,9 +58,9 @@ public class ReqresPojoTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} - Check single resource ID whose equals {0}")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
-    @DisplayName("GET: SINGLE <RESOURCE>")
+    @DisplayName("GET: SINGLE <USER>")
     public void checkSingleUserTest(Integer userId) {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOK200());
         UserData userData = given()
@@ -183,7 +183,7 @@ public class ReqresPojoTest {
         assertEquals(sortedYears, years);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} - Check single resource ID whose equals {0}")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
     @DisplayName("GET: SINGLE <RESOURCE>")
     public void checkSingleResourceTest(Integer resId) {
