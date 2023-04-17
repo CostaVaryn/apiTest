@@ -28,7 +28,7 @@ public class ReqresNoPojoTest {
     List<PersonInfo> usersList = new ArrayList<>(testData.getUsersList());
     List<ResourceInfo> resList = new ArrayList<>(testData.getResList());
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} - Check {0} list users")
     @DisplayName("GET: Check list users")
     @ValueSource(ints = {1, 2})
     public void checkListUsersNoPojoTest(Integer page) {
@@ -61,7 +61,7 @@ public class ReqresNoPojoTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} - Check single user ID whose equals {0}")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
     @DisplayName("GET: Check single user")
     public void checkSingleUserTest(Integer userId) {
@@ -128,7 +128,7 @@ public class ReqresNoPojoTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} - Check single resource ID whose equals {0}")
     @ValueSource(ints = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
     @DisplayName("GET: Check single resource")
     public void checkSingleResourceTest(Integer resId) {
